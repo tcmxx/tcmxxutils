@@ -1,0 +1,23 @@
+{
+    "name": "com.tcmxx.tcmxxutils",
+    "version": "1.0.0",
+    "displayName": "TCMXX Utils",
+    "description": "My Utilities",
+    "unity": "2019.1",
+    "dependencies": {
+      "com.unity.addressables": "1.8.5",
+      "com.neuecc.unirx": "7.1.0",
+      "com.dbrizov.naughtyattributes": "2.0.7",
+      "com.unity.textmeshpro": "2.0.1",
+      "com.cysharp.unitask": "2.0.36"
+   },
+   "keywords": [
+      "Math"
+    ],
+    "author": {
+      "name": "tcmxx",
+      "email": "maxiaoxiao1991@gmail.com",
+      "url": "https://www.tcmxx.com"
+    }
+  }
+  

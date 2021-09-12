@@ -1,10 +1,14 @@
 {
     "name": "Unity.com.tcmxx.tcmxxutils.Editor",
-    "references": [],
-    "includePlatforms": [],
-    "excludePlatforms": [
+    "rootNamespace": "",
+    "references": [
+        "GUID:8a112daf3e65cfb418e98823259094ea",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21"
+    ],
+    "includePlatforms": [
         "Editor"
     ],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],

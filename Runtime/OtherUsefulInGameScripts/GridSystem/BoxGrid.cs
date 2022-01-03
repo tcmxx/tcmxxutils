@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace TCUtils {
 
+    [Serializable]
     public class BoxGridDesc {
 
         public float3 cellSize;
@@ -19,7 +20,9 @@ namespace TCUtils {
             }
         }
 
+        [SerializeField]
         private RigidTransform gridTransform;
+        [SerializeField]
         private RigidTransform inverseGridTransform;
 
         public BoxGridDesc() : this(new float3(1, 1, 1)) {}
@@ -50,11 +53,16 @@ namespace TCUtils {
         }
     }
 
+    [Serializable]
     public class BoxGrid<TCell> {
 
-        private readonly TCell[] data;
+        [SerializeField, HideInInspector]
+        private TCell[] data;
 
-        private BoxGridDesc GridDesc { get; set; }
+        [field: SerializeField]
+        public BoxGridDesc GridDesc { get; private set; }
+
+        [field: SerializeField]
         public int3 GridTotalSize { get; private set; }
 
         public BoxGrid(int3 gridTotalSize, TCell defaultCellValue) : this(gridTotalSize, new float3(1, 1, 1), defaultCellValue) {}

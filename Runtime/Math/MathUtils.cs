@@ -124,5 +124,20 @@ namespace TCUtils
                 n++;
             }
         }
+
+        public static uint WangHash(uint n) {
+            // https://gist.github.com/badboy/6267743#hash-function-construction-principles
+            // Wang hash: this has the property that none of the outputs will
+            // collide with each other, which is important for the purposes of
+            // seeding a random number generator.  This was verified empirically
+            // by checking all 2^32 uints.
+            n = (n ^ 61u) ^ (n >> 16);
+            n *= 9u;
+            n = n ^ (n >> 4);
+            n *= 0x27d4eb2du;
+            n = n ^ (n >> 15);
+
+            return n;
+        }
     }
 }

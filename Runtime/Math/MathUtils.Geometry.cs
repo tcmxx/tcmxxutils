@@ -57,5 +57,14 @@ namespace TCUtils {
             max = math.max(max, p2);
             return (min, max);
         }
+        
+        public static (float2 min, float2 max) GetTriangleAABB(float2 p0, float2 p1, float2 p2) {
+            var min = math.min(p0, p1);
+            min = math.min(min, p2);
+
+            var max = math.max(p0, p1);
+            max = math.max(max, p2);
+            return (min, max);
+        }
     }
 }

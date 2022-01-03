@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -78,13 +79,13 @@ public class MovePath : MonoBehaviour {
         }
         if(pathMode == PathMode.Bezier)
         {
-            points = Curves.EvalBezier(temppoints, steps);
+            points = Curves.EvalBezier(temppoints, steps, math.up());
         }else if(pathMode == PathMode.Bspline)
         {
-            points = Curves.EvalBspline(temppoints, steps, true);
+            points = Curves.EvalBspline(temppoints, steps, true, math.up());
         }else if(pathMode == PathMode.CRspline)
         {
-            points = Curves.EvalCRspline(temppoints, steps);
+            points = Curves.EvalCRspline(temppoints, steps, math.up());
         }
     }
 

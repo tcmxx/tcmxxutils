@@ -98,7 +98,7 @@ namespace TCUtils {
             data[GridCoordinateToDataIndex(coordinate)] = cellData;
         }
 
-        private bool CheckCoordinateInRange(int3 gridCoordinate, bool assert = true) {
+        public bool CheckCoordinateInRange(int3 gridCoordinate, bool assert = true) {
             var isInRange = gridCoordinate.x >= 0 && gridCoordinate.y >= 0 && gridCoordinate.z >= 0;
             isInRange &= gridCoordinate.x < GridTotalSize.x && gridCoordinate.y < GridTotalSize.y && gridCoordinate.z < GridTotalSize.z;
             Debug.Assert(!assert || isInRange, $"GridCoordinate not in range: {gridCoordinate}");

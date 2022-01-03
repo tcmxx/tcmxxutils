@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -76,7 +77,7 @@ public class Curves
                      Vector3 p1,
                      Vector3 p2,
                      Vector3 p3,
-                     Vector3 Binit,
+                     Vector3 initNormal,
                      int steps)
     {
 
@@ -121,20 +122,20 @@ public class Curves
             curvePoint.T.Normalize();
             if (i == 0)
             {
-                if (Approx(Binit.normalized, curvePoint.T.normalized))
+                if (Approx(initNormal.normalized, curvePoint.T.normalized))
                 {
-                    curvePoint.N = Vector3.Cross(new Vector3(Binit.x, Binit.y, Binit.z), curvePoint.T).normalized;
+                    curvePoint.B = Vector3.Cross(new Vector3(initNormal.x, initNormal.y, initNormal.z), curvePoint.T).normalized;
                 }
                 else
                 {
-                    curvePoint.N = Vector3.Cross(Binit, curvePoint.T).normalized;
+                    curvePoint.B = Vector3.Cross(initNormal, curvePoint.T).normalized;
                 }
             }
             else
             {
-                curvePoint.N = Vector3.Cross(R[i - 1].B, curvePoint.T).normalized;
+                curvePoint.B = Vector3.Cross(R[i - 1].N, curvePoint.T).normalized;
             }
-            curvePoint.B = Vector3.Cross(curvePoint.T, curvePoint.N).normalized;
+            curvePoint.N = Vector3.Cross(curvePoint.T, curvePoint.B).normalized;
 
             R.Add(curvePoint);
         }
@@ -145,7 +146,7 @@ public class Curves
 
     // the P argument holds the control points and steps gives the amount of uniform tessellation.
     // the rest of the arguments are for the adaptive tessellation extra.
-    public static List<CurvePoint> EvalBezier(List<Vector3> P, int steps)
+    public static List<CurvePoint> EvalBezier(List<Vector3> P, int steps, float3 initNormal)
     {
         // Check
         if (P.Count < 4 || P.Count % 3 != 1)
@@ -177,11 +178,11 @@ public class Curves
             List<CurvePoint> tmp;
             if (i == 0)
             {
-                tmp = CoreBezier(P[i * 3], P[i * 3 + 1], P[i * 3 + 2], P[i * 3 + 3], new Vector3(0, 0, 1), steps);
+                tmp = CoreBezier(P[i * 3], P[i * 3 + 1], P[i * 3 + 2], P[i * 3 + 3], initNormal, steps);
             }
             else
             {
-                tmp = CoreBezier(P[i * 3], P[i * 3 + 1], P[i * 3 + 2], P[i * 3 + 3], result[result.Count - 1].B, steps);
+                tmp = CoreBezier(P[i * 3], P[i * 3 + 1], P[i * 3 + 2], P[i * 3 + 3], result[result.Count - 1].N, steps);
             }
             if (i == 0)
             {
@@ -198,7 +199,7 @@ public class Curves
     }
 
 
-    public static List<CurvePoint> EvalBspline(List<Vector3> P, int steps, bool averageBNT)
+    public static List<CurvePoint> EvalBspline(List<Vector3> P, int steps, bool averageBNT, float3 initNormal)
     {
         // Check
         if (P.Count < 4)
@@ -241,14 +242,14 @@ public class Curves
                 tmp = CoreBezier(new Vector3(transformedCps.m00, transformedCps.m10, transformedCps.m20),
                     new Vector3(transformedCps.m01, transformedCps.m11, transformedCps.m21),
                     new Vector3(transformedCps.m02, transformedCps.m12, transformedCps.m22),
-                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), new Vector3(0, 0, 1), steps);
+                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), initNormal, steps);
             }
             else
             {
                 tmp = CoreBezier(new Vector3(transformedCps.m00, transformedCps.m10, transformedCps.m20),
                     new Vector3(transformedCps.m01, transformedCps.m11, transformedCps.m21),
                     new Vector3(transformedCps.m02, transformedCps.m12, transformedCps.m22),
-                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), result[result.Count - 1].B, steps);
+                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), result[result.Count - 1].N, steps);
             }
 
             if (i == 0)
@@ -322,7 +323,7 @@ public class Curves
         return result;
     }
 
-    public static List<CurvePoint> EvalCRspline(List<Vector3> P, int steps)
+    public static List<CurvePoint> EvalCRspline(List<Vector3> P, int steps, float3 initNormal)
     {
         // Check
         if (P.Count < 4)
@@ -361,14 +362,14 @@ public class Curves
                 tmp = CoreBezier(new Vector3(transformedCps.m00, transformedCps.m10, transformedCps.m20),
                     new Vector3(transformedCps.m01, transformedCps.m11, transformedCps.m21),
                     new Vector3(transformedCps.m02, transformedCps.m12, transformedCps.m22),
-                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), new Vector3(0, 0, 1), steps);
+                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), initNormal, steps);
             }
             else
             {
                 tmp = CoreBezier(new Vector3(transformedCps.m00, transformedCps.m10, transformedCps.m20),
                     new Vector3(transformedCps.m01, transformedCps.m11, transformedCps.m21),
                     new Vector3(transformedCps.m02, transformedCps.m12, transformedCps.m22),
-                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), result[result.Count - 1].B, steps);
+                    new Vector3(transformedCps.m03, transformedCps.m13, transformedCps.m23), result[result.Count - 1].N, steps);
             }
 
             if (i == 0)

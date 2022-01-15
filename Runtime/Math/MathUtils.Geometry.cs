@@ -28,7 +28,7 @@ namespace TCUtils {
             var b = new float3(p0.x - rayOrigin.x, p0.y - rayOrigin.y, p0.z - rayOrigin.z);
             var x = math.mul(barycentricTempMatrix, b);
 
-            if (x.z < 0 && x.x >= 0 && x.y >= 0 && x.x + x.y <= 1) {
+            if (x.z >= 0 && x.x >= 0 && x.y >= 0 && x.x + x.y <= 1) {
                 return new RaycastHit() {
                     point = rayOrigin + x.z * rayDirection,
                     distance = x.z,

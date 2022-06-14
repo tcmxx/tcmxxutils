@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
@@ -26,21 +25,8 @@ public class Camera2DMovingBackground : MonoBehaviour {
 
     private int currentGroup = 0;
 
-    private void Awake() {
-        GameController.Instance.initCharacterSpawned += OnInitCharacterSpawned;
-    }
-
-    private void Start() {
-
-        GameController.Instance.chapterChanged += InstanceOnChapterChanged;
-    }
-
     private void InstanceOnChapterChanged(int oldChapter, int newChapter) {
         SwitchGroup(newChapter);
-    }
-
-    private void OnInitCharacterSpawned() {
-        SetGroupImmediately(GameController.Instance.CurrentChapterIndex);
     }
 
     // Update is called once per frame
@@ -50,13 +36,6 @@ public class Camera2DMovingBackground : MonoBehaviour {
         var moved = offset * moveFactor;
         var newPos = referencePosition + moved;
         backgroundRef.position = new Vector3(newPos.x, newPos.y, z);
-    }
-
-    private void OnDestroy() {
-        if (GameController.Instance) {
-            GameController.Instance.initCharacterSpawned -= OnInitCharacterSpawned;
-            GameController.Instance.chapterChanged -= InstanceOnChapterChanged;
-        }
     }
 
     public void SwitchGroup(int groupIndex) {

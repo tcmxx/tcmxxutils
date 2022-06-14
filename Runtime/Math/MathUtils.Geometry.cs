@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using CoherentNoise.Generation.Combination;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -57,7 +56,7 @@ namespace TCUtils {
             max = math.max(max, p2);
             return (min, max);
         }
-        
+
         public static (float2 min, float2 max) GetTriangleAABB(float2 p0, float2 p1, float2 p2) {
             var min = math.min(p0, p1);
             min = math.min(min, p2);

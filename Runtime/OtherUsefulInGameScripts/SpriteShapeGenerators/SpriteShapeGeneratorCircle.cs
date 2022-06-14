@@ -27,7 +27,7 @@ public class SpriteShapeGeneratorCircle : MonoBehaviour {
         var controller = GetComponent<SpriteShapeController>();
 
 #if UNITY_EDITOR
-        Undo.RecordObject(controller, "SpriteShapeCicle");
+        Undo.RecordObject(controller, "SpriteShapeCircle");
 #endif
 
         var spine = controller.spline;
@@ -41,8 +41,8 @@ public class SpriteShapeGeneratorCircle : MonoBehaviour {
         // var jh = controller.BakeMesh();
         // jh.Complete();
 #if UNITY_EDITOR
-        var prefabType = PrefabUtility.GetPrefabType(gameObject);
-        if (prefabType == PrefabType.PrefabInstance) {
+
+        if (PrefabUtility.IsPartOfAnyPrefab(gameObject)) {
             PrefabUtility.RecordPrefabInstancePropertyModifications(controller);
             // Debug.Log("TEst");
         }

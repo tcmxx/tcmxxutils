@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 using UnityEngine.Advertisements;
 #if UNITY_ADS
 public static class UnityAdsUtilities

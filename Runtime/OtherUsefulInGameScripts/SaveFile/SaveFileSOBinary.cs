@@ -29,7 +29,7 @@ public abstract class SaveFileSOBinary<T> : SaveFileSO<T> {
             try {
                 result = (T)bf.Deserialize(file);
 
-            } catch (Exception e) {
+            } catch (Exception) {
                 result = defaultValue;
                 Debug.LogError("Can not deserialize the saved data");
             }
@@ -51,7 +51,7 @@ public abstract class SaveFileSOBinary<T> : SaveFileSO<T> {
                 file = File.Open(fullPath, FileMode.Open, FileAccess.Read);
 
                 T tmpGameData = (T)bf.Deserialize(file);
-            } catch (Exception e) {
+            } catch (Exception) {
                 result = false;
             } finally {
                 if (file != null)
